@@ -21,7 +21,7 @@ body {
     padding: 0;
 }
 
-#errors {
+.errors {
     position: absolute;
     top: 10px;
 }

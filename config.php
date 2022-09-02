@@ -2,9 +2,9 @@
 
 $login = fopen("login.config", "r") or die("Login details not found");
 
-$username = fgets($login);
-$password = fgets($login);
-$database_name = fgets($login);
+$username = str_replace(array("\n","\r"), '', fgets($login));
+$password = str_replace(array("\n","\r"), '', fgets($login));
+$database_name = str_replace(array("\n","\r"), '', fgets($login));
 
 define("DB_SERVER", "localhost");
 define("DB_USERNAME", $username);

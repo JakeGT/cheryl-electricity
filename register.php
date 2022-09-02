@@ -1,5 +1,6 @@
 <?php
 
+// MySQL setup
 require_once "config.php";
 session_start();
 
@@ -7,6 +8,7 @@ $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check username
     if(empty(trim($_POST["username"]))) {
         $username_err = "Please enter a username.";
     } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))) {
@@ -96,7 +98,7 @@ mysqli_close($link);
 
 <body>
     <div id="bg"></div>
-    <div id="errors">
+    <div class="errors">
     <?php
         $ret = "";
         if (!($password_err == "")) {

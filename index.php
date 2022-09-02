@@ -7,7 +7,7 @@
     $login_error = "";
 
     if (isset($_SESSION['id']) && $_SESSION['id']!="") {
-        header("Location: ./dashboard.php");
+        header("Location: ./dashboard");
         die();
     }
     require "config.php";
@@ -35,7 +35,7 @@
                 session_regenerate_id();
                 $_SESSION['username'] = $username;
                 $_SESSION['id'] = $row['id'];
-                header("Location: dashboard.php");
+                header("Location: dashboard");
             }
             else {
                 $login_error = "Incorrect password";
@@ -51,15 +51,16 @@
 </head>
 
 <body>
+    <div id="bg"></div>
+    <div class="errors">
     <?php
         if (!($login_error == "")) {
-            $ret = $ret . '<div class="alert">
+            echo '<div class="alert">
             <span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>'.$login_error.
         '</div>';
         }
-
     ?>
-    <div id="bg"></div>
+    </div>
     <form action="index.php" method="post">
         <div class="form-field">
             <input type="text" placeholder="Username" required name="username"/>
