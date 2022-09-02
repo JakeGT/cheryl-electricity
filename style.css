@@ -21,6 +21,11 @@ body {
     padding: 0;
 }
 
+#errors {
+    position: absolute;
+    top: 10px;
+}
+
 form {
     width: 350px;
     position: relative;
@@ -42,7 +47,7 @@ form .form-field:nth-child(1)::before {
     height: 20px;
     top: 15px;
 }
-form .form-field:nth-child(2)::before {
+form .form-field.password::before {
     background-image: url(img/lock-icon.png);
     width: 16px;
     height: 16px;
@@ -98,3 +103,38 @@ form .btn:active {
     transition: 0;
     background-color: #214e09;
 }
+
+#register {
+    width: 100%;
+    text-align: center;
+}
+
+#register a {
+    color: white;
+    text-decoration: none;
+}
+
+/* The alert message box */
+.alert {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+  }
+  
+  /* The close button */
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  /* When moving the mouse over the close button */
+  .closebtn:hover {
+    color: black;
+  }

@@ -1,12 +1,12 @@
 <?php
 
 require_once "config.php";
-
+session_start();
 
 $username = $password = $confirm_password = "";
 $username_err = $password_err = $confirm_password_err = "";
 
-if($_SERVER["REQUEST METHOD"] == "POST") {
+if($_SERVER["REQUEST_METHOD"] == "POST") {
     if(empty(trim($_POST["username"]))) {
         $username_err = "Please enter a username.";
     } elseif(!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))) {
@@ -25,7 +25,7 @@ if($_SERVER["REQUEST METHOD"] == "POST") {
                 if(mysqli_stmt_num_rows($stmt) == 1) {
                     $username_err = "This username is already taken.";
                 } else {
-                    $username = trim($_POST["username"])
+                    $username = trim($_POST["username"]);
                 }
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
@@ -68,7 +68,7 @@ if($_SERVER["REQUEST METHOD"] == "POST") {
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
             // Redirect to login page
-            header("location: login.php");
+            header("location: index.php");
         } else{
             echo "Oops! Something went wrong. Please try again later.";
         }
@@ -82,3 +82,56 @@ if($_SERVER["REQUEST METHOD"] == "POST") {
 mysqli_close($link);
 }
 ?>
+
+<head>
+    <?php
+    if (isset($_SESSION['id']) && $_SESSION['id']!="") {
+        header("Location: ./dashboard.php");
+        die();
+    }
+    ?>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div id="bg"></div>
+    <div id="errors">
+    <?php
+        $ret = "";
+        if (!($password_err == "")) {
+            $ret = $ret . '<div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>'.$password_err.
+          '</div>';
+        }
+        if (!($username_err == "")) {
+            $ret = $ret . '<div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>'.$username_err.
+          '</div>';
+        }
+        if (!($confirm_password_err == "")) {
+            $ret = $ret . '<div class="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display=\'none\';">&times;</span>'.$confirm_password_err.
+          '</div>';
+        }
+
+        echo $ret;
+
+        ?>
+    </div>
+    <form action="register.php" method="POST">
+        <div class="form-field">
+            <input type="text" placeholder="Username" name="username" required/>
+        </div>
+  
+        <div class="form-field password">
+            <input type="password" placeholder="Password" name="password" required/>
+        </div>
+        <div class="form-field password">
+            <input type="password" placeholder="Repeat Password" name="confirm_password" required/>
+        </div>
+        <div class="form-field">
+            <button class="btn" type="submit">Register</button>
+        </div>
+    </form>
+</body>
